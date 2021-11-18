@@ -34,17 +34,18 @@ void SavingNode::callbackMap(const nav_msgs::msg::OccupancyGrid::SharedPtr msg)
 {
   // Store map to class variable
   map = *msg;
+  RCLCPP_INFO(get_logger(), "map received");
 }
 
 void SavingNode::callbackCmd(const std_msgs::msg::String::SharedPtr msg)
 {
   if (msg->data == "stop") {
     nav2_map_server::SaveParameters params;
-    params.map_file_name = "bla";
+    params.map_file_name = "map_house1";
+    params.image_format = "pgm";
     params.free_thresh = 0.25;
     params.occupied_thresh = 0.65;
 
-    nav_msgs::msg::OccupancyGrid map;
     nav2_map_server::saveMapToFile(map, params);
   }
 }
